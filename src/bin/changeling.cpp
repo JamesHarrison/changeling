@@ -35,7 +35,7 @@ jack_ringbuffer_t *buffer_l;
 jack_ringbuffer_t *buffer_r;
 
 /// Run state - we start OUT
-ChangelingRunState state = CHANGELING_STATE_ENTERING;
+ChangelingRunState state = CHANGELING_STATE_STARTING;
 ChangelingRunState last_state = CHANGELING_STATE_EXITING;
 
 // Mosquitto handle
@@ -93,6 +93,12 @@ int process (jack_nframes_t nframes, void *arg)
   jack_default_audio_sample_t *in_l =   (jack_default_audio_sample_t *) jack_port_get_buffer (input_port[0], nframes);
   jack_default_audio_sample_t *in_r =   (jack_default_audio_sample_t *) jack_port_get_buffer (input_port[1], nframes);
   // These are now pointers to the buffer spaces which can be read/written to.
+  // If we're not done starting up just memcpy in to out.
+  if (state == CHANGELING_STATE_STARTING) {
+    memcpy (out_l, in_l, sizeof (jack_default_audio_sample_t) * nframes);
+    memcpy (out_r, in_r, sizeof (jack_default_audio_sample_t) * nframes);
+    return 0;
+  }
   // Let's do some simple maths -once-
   size_t framesize = sizeof(jack_default_audio_sample_t);
   size_t maxsize = (framesize * nframes);
@@ -314,6 +320,9 @@ int main(int argc, char *argv[]) {
   
   free (ports);
   // We now have a full set of connected ports.
+
+  // We're ready to go!
+  state = CHANGELING_STATE_ENTERING;
   // And now we want to loop endlessly while we're running.
   while(state != CHANGELING_STATE_EXITING) {
     if(state != last_state) {

@@ -15,5 +15,7 @@ typedef enum {
   /// Dumping buffer
   CHANGELING_STATE_DUMPING,
   /// Shutting down
-  CHANGELING_STATE_EXITING
+  CHANGELING_STATE_EXITING,
+  /// Starting up
+  CHANGELING_STATE_STARTING
 } ChangelingRunState;
