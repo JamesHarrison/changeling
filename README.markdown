@@ -46,6 +46,10 @@ To compile and use changeling you need the following:
 * The libsndfile development headers
 * The libmosquitto and libmosquittopp development headers
 
+On Ubuntu, installing these can be done with:
+
+    sudo apt-get install libjack-jackd2-dev libsndfile1-dev libmosquitto0-dev cmake build-essential
+
 Compilation is the usual cmake pattern of:
     
     cd changeling
@@ -62,12 +66,18 @@ To use changeling once compiled (or installed from package) you will need:
 * A sound card with at least one stereo input and one stereo output
 * A MQTT broker on the same machine as changeling (such as mosquitto)
 
+To install mosquitto and JACK on Ubuntu (plus mosquitto clients):
+
+    sudo apt-get install jackd2 mosquitto mosquitto-clients
+
+You may want to work with the delay from Python; python-mosquitto is recommended, can be installed on Ubuntu easily, has no dependencies above libmosquitto and an example read-only client is provided in the examples folder.
+
 
 ## Licensing and Credits
 
 Changeling was developed by James Harrison (http://talkunafraid.co.uk/) for Insanity Radio 103.2 FM (http://www.insanityradio.com/).
 
-Copyright (c) 2012, James Harrison
+Copyright (c) 2012, James Harrison.
 
 All rights reserved.
 
