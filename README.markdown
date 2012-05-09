@@ -73,7 +73,7 @@ To compile and use changeling you need the following:
 * CMake 2.6 or greater
 * The JACK Audio Connection Kit development headers (libjack)
 * The libsndfile development headers
-* The libmosquitto and libmosquittopp development headers
+* The libmosquitto development headers
 
 On Ubuntu, installing these can be done with:
 
